@@ -156,7 +156,7 @@ def main():
                     part = len(list(output_dir.glob("*.parquet")))
                     output_file = output_dir / f"part.{part}.parquet"
 
-                    print(f"Saving {lang} part {part}")
+                    pbar.set_description(f"Saving {lang} part {part}")
                     df = pd.DataFrame(lang_datasets[lang])
                     df.to_parquet(output_file)
                     lang_datasets[lang] = []
@@ -166,7 +166,17 @@ def main():
         pbar.close()
         
         
+        # save remaining data
+        for lang, data in lang_datasets.items():
+            output_dir = Path(args.output_dir) / lang / args.split_name
+            output_dir.mkdir(parents=True, exist_ok=True)
 
+            part = len(list(output_dir.glob("*.parquet")))
+            output_file = output_dir / f"part.{part}.parquet"
+
+            print(f"Saving {lang} part {part}")
+            df = pd.DataFrame(data)
+            df.to_parquet(output_file)
 
         # prevent adding anything more to the queue and wait for queue to empty
         #que_in.close()
