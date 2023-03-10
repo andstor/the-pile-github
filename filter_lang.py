@@ -23,7 +23,8 @@ from guesslang import Guess
 
 
 #multiprocessing.util._logger = multiprocessing.util.log_to_stderr(logging.DEBUG)
-logging.getLogger('transformers').setLevel(logging.ERROR)
+#logging.getLogger('transformers').setLevel(logging.ERROR)
+logging.getLogger('guesslang').setLevel(logging.ERROR)
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Filter a dataset by programming language")
@@ -155,7 +156,7 @@ def main():
                     part = len(list(output_dir.glob("*.parquet")))
                     output_file = output_dir / f"part.{part}.parquet"
 
-                    pbar.set_description(f"Saving {lang} part {part}")
+                    print(f"Saving {lang} part {part}")
                     df = pd.DataFrame(lang_datasets[lang])
                     df.to_parquet(output_file)
                     lang_datasets[lang] = []
