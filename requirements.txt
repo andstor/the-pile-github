@@ -1,0 +1,6 @@
+tqdm
+zstandard
+pandas
+fastparquet
+guesslang
+tensorflow
