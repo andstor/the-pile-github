@@ -3,8 +3,8 @@ from glob import glob
 from pathlib import Path
 
 for i in range(0, 30):
-    print(f"Processing data{i:02d}")
     languages = {}
+    print(f"Processing data{i:02d}")
     globbed_files = glob(f"data{i:02d}/**/*.parquet", recursive=True)
 
     # sort 
@@ -22,6 +22,6 @@ for i in range(0, 30):
         df = pd.concat([pd.read_parquet(file) for file in files])
         print(df.shape)
         # mkdir
-        save_path = Path(f"data/{language}")
+        save_path = Path(f"data/{language}/train")
         save_path.mkdir(exist_ok=True, parents=True)
-        df.to_parquet(save_path / "train.parquet", )
+        df.to_parquet(save_path / f"part.{i}.parquet")
