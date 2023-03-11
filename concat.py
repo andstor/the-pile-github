@@ -19,7 +19,7 @@ for i in range(0, 30):
 
     for language, files in languages.items():
         print(language, len(files))
-        df = pd.concat([pd.read_parquet(file) for file in files])
+        df = pd.concat([pd.read_parquet(file) for file in files], ignore_index=True)
         print(df.shape)
         # mkdir
         save_path = Path(f"data/{language}/train")
